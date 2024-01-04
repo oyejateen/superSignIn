@@ -10,6 +10,27 @@ app.get('/', (req, res) => {
  res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get('/signup', (req, res) => {
+ res.sendFile(__dirname + '/views/signup.html');
+});
+
+app.post('/signup', async (req, res) => {
+ const username = req.body.username; 
+ const password = req.body.password; 
+ console.log(username, password);
+
+ // Add new user to JSON file
+ const userCredentials = { username, password };
+ console.log(userCredentials);
+
+
+      // Write the updated array back to the JSON file
+      await fs.promises.writeFile('credentials.json', JSON.stringify(userCredentails));
+
+      // Return a success message
+      res.status(200).send("OK!! User has been created.");
+    
+});
 app.post('/login', async (req, res) => {
  // Handle login credentials
  console.log(req.body);
